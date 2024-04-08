@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: springboot-gke
+  config:
+    import: sm://
+  cloud:
+    gcp:
+      project-id: 'burner-tanazad1'
+  data:
+    redis:
+      host: ${sm://REDISHOST}
+      port: ${sm://REDISPORT}
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${sm://OAUTH_CLIENT_ID}
+            client-secret: ${sm://OAUTH_CLIENT_SECRET}
+            scope: openid,https://www.googleapis.com/auth/userinfo.profile,https://www.googleapis.com/auth/userinfo.email
+      resourceserver:
+        jwt:
+          issuer-uri: https://accounts.google.com
+          jwk-set-uri: https://www.googleapis.com/oauth2/v3/certs

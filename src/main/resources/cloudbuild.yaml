@@ -1,0 +1,26 @@
+steps:
+  # Build the Docker image
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'gcr.io/$PROJECT_ID/sample-gke:$SHORT_SHA', '.']
+
+  # Push the Docker image to Google Container Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/$PROJECT_ID/sample-gke:$SHORT_SHA']
+
+images:
+  - 'gcr.io/$PROJECT_ID/sample-gke:$SHORT_SHA'
+
+substitutions:
+  #GCP Specific configuration. Devlopers can edit this while deploying.
+  _PROJECT_ID: burner-tanazad1
+  _REGION: us-central1
+  _IMAGE_NAME: sample-gke
+  _REPO_NAME: dev-spring-boot-gke-repo-01
+  _SERVICE_NAME: sample-gke
+  _VERSION: v1.0
+  _AUTH: --allow-unauthenticated
+  _VPC_CONN: dev-spring-boot-gke-repo-01
+  _TRAFFIC: all-traffic
+  _TIME_O: timeout=3600
+  _MEMORY: 1024Mi
+  # _SHORT_SHA is usually populated by Cloud Build itself based on the Git commit triggering the build
