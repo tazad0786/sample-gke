@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sample-gke
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sample-gke
+  template:
+    metadata:
+      labels:
+        app: sample-gke
+    spec:
+      containers:
+        - name: sample-gke
+          image: gcr.io/$PROJECT_ID/sample-gke:$SHORT_SHA
+          ports:
+            - containerPort: 8080
