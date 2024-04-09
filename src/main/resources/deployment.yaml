@@ -14,6 +14,17 @@ spec:
     spec:
       containers:
         - name: sample-gke
-          image: gcr.io/$PROJECT_ID/sample-gke:$SHORT_SHA
+          image: gcr.io/burner-tanazad1/sample-gke:latest  # Use the correct image tag
           ports:
             - containerPort: 8080
+          env:
+            - name: REDISHOST
+              valueFrom:
+                secretKeyRef:
+                  name: redis-secrets
+                  key: host
+            - name: REDISPORT
+              valueFrom:
+                secretKeyRef:
+                  name: redis-secrets
+                  key: port
